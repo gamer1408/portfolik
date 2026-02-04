@@ -47,15 +47,15 @@ const Footer = () => {
     }, []);
 
     return (
-        <footer className="footer" ref={footerRef}>
+        <footer className="footer" ref={footerRef} id="contact">
             <div className="footer-content">
                 <div className="footer-cta">
                     <span className="cta-label">HAVE A PROJECT IN MIND?</span>
                     <h2 className="cta-headline" ref={headlineRef}>
                         LET’S WORK <br /> TOGETHER
                     </h2>
-                    <a href="mailto:hello.roshansahu@gmail.com" className="cta-email">
-                        hello.roshansahu@gmail.com
+                    <a href="mailto:urozaliyevyahyobek@gmail.com" className="cta-email">
+                        urozaliyevyahyobek@gmail.com
                     </a>
                 </div>
 
@@ -70,11 +70,11 @@ const Footer = () => {
                     <div className="footer-credits">
                         <div className="credit-item">
                             <span>DESIGNED & DEVELOPED</span>
-                            <span>© 2024 YAHYOBEK UROZALIYEV</span>
+                            <span>© 2025 YAHYOBEK UROZALIYEV</span>
                         </div>
                         <div className="credit-item">
                             <span>LOCAL TIME</span>
-                            <span>{new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })} BENGALURU, IN</span>
+                            <span>{new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })} ANGREN, UZ</span>
                         </div>
                     </div>
                 </div>
