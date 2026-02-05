@@ -29,23 +29,29 @@
 }
 
 .about-text {
-    font-size: clamp(24px, 4vw, 56px);
-    line-height: 1.2;
+    font-size: clamp(24px, 4vw, 42px);
+    line-height: 1.25;
     font-weight: 400;
     letter-spacing: -0.01em;
     max-width: 1000px;
+    color: rgba(255, 255, 255, 0.1);
 }
 
 .about-word {
     display: inline-block;
     white-space: nowrap;
+    margin-right: 0.25em;
 }
 
 .about-char {
-    color: rgba(255, 255, 255, 0.1);
-    /* Initial state: dimmed */
-    transition: color 0.1s ease;
-    will-change: color;
+    display: inline-block;
+    color: inherit;
+    transition: color 0.4s ease, text-shadow 0.4s ease;
+    will-change: color, text-shadow;
+}
+
+.about-char[style*="rgba(255, 255, 255, 1)"] {
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
 }
 
 @media (max-width: 768px) {

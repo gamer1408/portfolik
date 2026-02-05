@@ -11,26 +11,55 @@ const About = () => {
 
     useEffect(() => {
         const ctx = gsap.context(() => {
-            // Reveal the description text as user scrolls
             const chars = textRef.current.querySelectorAll('.about-char');
 
-            gsap.fromTo(chars,
-                { color: 'rgba(255, 255, 255, 1)' },
-                {
-                    color: 'rgba(255, 255, 255, 1)',
-                    stagger: 0.1,
+            // "Turning ON" & "Turning OFF" phase for text
+            // We use a scrub animation that reveals text as it enters the "sweet spot" of the viewport
+            // and dims it as it leaves.
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: textRef.current,
+                    start: 'top 85%',
+                    end: 'bottom 15%',
+                    scrub: true,
+                }
+            });
+
+            tl.to(chars, {
+                color: 'rgba(255, 255, 255, 1)',
+                stagger: {
+                    each: 0.05,
+                    from: "start"
+                },
+                duration: 0.3
+            })
+            .to(chars, {
+                color: 'rgba(255, 255, 255, 0.1)',
+                stagger: {
+                    each: 0.05,
+                    from: "start"
+                },
+                duration: 0.3
+            }, "+=0.2");
+
+            // Caption flicker animation "Turning On"
+            gsap.fromTo('.about-caption', 
+                { opacity: 0, x: -20 },
+                { 
+                    opacity: 1, 
+                    x: 0,
+                    duration: 1,
                     scrollTrigger: {
-                        trigger: textRef.current,
+                        trigger: sectionRef.current,
                         start: 'top 80%',
-                        end: 'bottom 40%',
-                        scrub: true,
+                        toggleActions: 'play reverse play reverse'
                     }
                 }
             );
 
-            // Parallax for the small caption
-            gsap.to('.about-caption', {
-                y: -50,
+            // Parallax as it moves
+            gsap.to('.about-container', {
+                y: -30,
                 scrollTrigger: {
                     trigger: sectionRef.current,
                     start: 'top bottom',
