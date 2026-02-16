@@ -16,15 +16,49 @@
 }
 
 .hero-headline {
-    font-size: clamp(50px, 12vw, 180px);
-    line-height: 0.8;
-    /* Critical: Tight line-height matching Roshan Sahu */
+    font-size: clamp(40px, 10vw, 80px);
+    /* Mobile: starts at 40px, scales to 80px */
+    line-height: 0.9;
+    /* Slightly more breathing room on mobile */
     font-weight: 700;
     letter-spacing: -0.05em;
     /* Critical: Negative tracking for editorial look */
     text-transform: uppercase;
     margin: 0;
     will-change: transform;
+}
+
+/* Tablet and up */
+@media (min-width: 640px) {
+    .hero-headline {
+        font-size: clamp(60px, 11vw, 120px);
+        line-height: 0.85;
+    }
+}
+
+/* Medium screens */
+@media (min-width: 768px) {
+    .hero-headline {
+        font-size: clamp(80px, 12vw, 140px);
+        line-height: 0.82;
+    }
+}
+
+/* Large screens */
+@media (min-width: 1024px) {
+    .hero-headline {
+        font-size: clamp(100px, 12vw, 160px);
+        line-height: 0.8;
+    }
+}
+
+/* Extra large screens */
+@media (min-width: 1280px) {
+    .hero-headline {
+        font-size: clamp(120px, 12vw, 180px);
+        line-height: 0.8;
+        /* Critical: Tight line-height matching Roshan Sahu */
+    }
 }
 
 .line {
@@ -113,9 +147,9 @@
         padding-top: 80px;
     }
 
-    .hero-headline {
-        font-size: clamp(50px, 20vw, 100px);
-        line-height: 0.85;
+    .line {
+        height: 1.2em;
+        /* Slightly more height on mobile to prevent clipping */
     }
 
     .hero-subtext-container {
