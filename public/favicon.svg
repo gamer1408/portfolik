@@ -1,0 +1,19 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dark background -->
+  <rect width="512" height="512" fill="#0D0D0D"/>
+  
+  <!-- Minimalist geometric frame -->
+  <rect x="64" y="64" width="384" height="384" stroke="#D4AF37" stroke-width="2" fill="none" opacity="0.3"/>
+  
+  <!-- YU letters in modern geometric style -->
+  <g fill="#FFFFFF">
+    <!-- Y -->
+    <path d="M160 180 L200 240 L200 300 L220 300 L220 240 L260 180 L235 180 L210 220 L185 180 Z"/>
+    
+    <!-- U -->
+    <path d="M280 180 L280 260 Q280 300 320 300 Q360 300 360 260 L360 180 L340 180 L340 260 Q340 280 320 280 Q300 280 300 260 L300 180 Z"/>
+  </g>
+  
+  <!-- Subtle accent dot -->
+  <circle cx="256" cy="340" r="4" fill="#D4AF37"/>
+</svg>

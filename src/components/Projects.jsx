@@ -1,105 +1,119 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight, Monitor, ExternalLink } from 'lucide-react';
+import { motion, useMotionValue, useSpring, useTransform, useScroll, AnimatePresence } from 'framer-motion';
+import { ArrowUpRight, Monitor, ExternalLink, Sparkles } from 'lucide-react';
 import '../styles/projects.css';
 
 const projects = [
     {
-        id: 'RS-0922',
+        id: 'YU-0126',
         index: '01',
-        title: 'Rekhchand',
-        description: 'An editorial fashion platform exploring minimalism and whitespace architecture.',
-        tech: 'NEXT JS • GSAP • WEBGL',
-        url: 'https://www.rekhchandsahu.com/',
-        image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80',
-        color: '#0D0D0D'
+        title: 'Aurum Architects',
+        subtitle: 'Luxury Studio',
+        description: 'A high-end minimalist landing page for an architecture studio, featuring split-screen design, smooth Framer Motion animations, and a luxury dark/gold aesthetic.',
+        tech: 'REACT • TAILWIND CSS • FRAMER MOTION',
+        url: 'https://architect-urozaliyev-two.vercel.app/',
+        image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=2053',
+        color: '#0D0D0D',
+        accent: '#D4AF37'
     },
     {
-        id: 'RS-1123',
+        id: 'YU-0226',
         index: '02',
-        title: 'Zenith',
-        description: 'A study in architectural symmetry and digital shadows for a Stockholm design firm.',
-        tech: 'FORMA • SUPABASE • GSAP',
-        url: 'https://roshan-sahu.com/',
-        image: 'https://images.unsplash.com/photo-1604871000636-074fa5117945?auto=format&fit=crop&q=80',
-        color: '#101010'
+        title: 'FooCom',
+        subtitle: 'AI Football Commentator',
+        description: 'An innovative sports tech startup platform using AI for real-time football commentary. Features a modern, tech-focused design with neon accents.',
+        tech: 'REACT • TAILWIND CSS • AI CONCEPT',
+        url: 'https://foocomurozaliyev.vercel.app/',
+        image: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=2093',
+        color: '#0A0E1A',
+        accent: '#3B82F6'
     },
     {
-        id: 'RS-0124',
+        id: 'YU-0326',
         index: '03',
-        title: 'Lumina',
-        description: 'Interactive lighting experience that reactive to user environmental data.',
-        tech: 'THREE JS • REACT • PHYSICS',
-        url: 'https://roshan-sahu.com/',
-        image: 'https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&q=80',
-        color: '#080808'
-    },
-    {
-        id: 'RS-0424',
-        index: '04',
-        title: 'Arte.m',
-        description: 'Curated digital gallery showcasing high-resolution motion art pieces.',
-        tech: 'REMIX • CLOUDINARY • GSAP',
-        image: 'https://images.unsplash.com/photo-1633167606207-d840b5070fc2?auto=format&fit=crop&q=80',
-        color: '#0E0E0E'
+        title: 'Malina.uz',
+        subtitle: 'Premium Raspberry Business',
+        description: 'A dedicated business platform for selling high-quality raspberry seedlings. Connects customers with product details and ordering information.',
+        tech: 'REACT • TAILWIND CSS',
+        url: 'https://malina-uz.vercel.app/',
+        image: 'https://images.unsplash.com/photo-1577069861033-55d04cec4ef5?auto=format&fit=crop&q=80&w=2009',
+        color: '#1A0D0D',
+        accent: '#DC2626'
     }
 ];
 
 const ProjectCard = ({ project, index, total }) => {
     const [isHovered, setIsHovered] = useState(false);
+    const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
     const cardRef = useRef(null);
 
-    // Parallax Motion Values
+    // Enhanced Parallax Motion Values
     const x = useMotionValue(0);
     const y = useMotionValue(0);
 
-    const springConfig = { stiffness: 120, damping: 20 };
+    const springConfig = { stiffness: 150, damping: 25, mass: 0.5 };
     const mouseX = useSpring(x, springConfig);
     const mouseY = useSpring(y, springConfig);
 
-    const rotateX = useTransform(mouseY, [-100, 100], [5, -5]);
-    const rotateY = useTransform(mouseX, [-100, 100], [-5, 5]);
+    // 3D Transform values
+    const rotateX = useTransform(mouseY, [-100, 100], [8, -8]);
+    const rotateY = useTransform(mouseX, [-100, 100], [-8, 8]);
 
-    // Elements parallax
-    const previewX = useTransform(mouseX, [-100, 100], [-8, 8]);
-    const previewY = useTransform(mouseY, [-100, 100], [-6, 6]);
+    // Enhanced parallax for different elements
+    const previewX = useTransform(mouseX, [-100, 100], [-12, 12]);
+    const previewY = useTransform(mouseY, [-100, 100], [-10, 10]);
+
+    const titleX = useTransform(mouseX, [-100, 100], [-5, 5]);
+    const titleY = useTransform(mouseY, [-100, 100], [-3, 3]);
 
     const handleMouseMove = (e) => {
         if (!cardRef.current) return;
         const rect = cardRef.current.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
-        x.set(e.clientX - centerX);
-        y.set(e.clientY - centerY);
+        const offsetX = e.clientX - centerX;
+        const offsetY = e.clientY - centerY;
+
+        x.set(offsetX);
+        y.set(offsetY);
+
+        // Update cursor position for magnetic effect
+        setCursorPosition({
+            x: (offsetX / rect.width) * 100,
+            y: (offsetY / rect.height) * 100
+        });
     };
 
     const handleMouseLeave = () => {
         x.set(0);
         y.set(0);
         setIsHovered(false);
+        setCursorPosition({ x: 0, y: 0 });
     };
 
     const cardSpring = {
         type: "spring",
-        stiffness: 120,
-        damping: 14
+        stiffness: 150,
+        damping: 18,
+        mass: 0.8
     };
 
     return (
         <motion.div
             className="project-card-wrapper"
-            initial={{ opacity: 0, x: 60 }}
+            initial={{ opacity: 0, y: 80, scale: 0.95 }}
             whileInView={{
                 opacity: 1,
-                x: 0,
+                y: 0,
+                scale: 1,
                 transition: {
                     type: "spring",
-                    stiffness: 80,
-                    damping: 20,
-                    delay: index * 0.12
+                    stiffness: 100,
+                    damping: 25,
+                    delay: index * 0.15
                 }
             }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-120px" }}
         >
             <motion.div
                 ref={cardRef}
@@ -108,59 +122,129 @@ const ProjectCard = ({ project, index, total }) => {
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={handleMouseLeave}
                 animate={{
-                    scale: isHovered ? 1.05 : 1,
+                    scale: isHovered ? 1.02 : 1,
                     backgroundColor: project.color
                 }}
                 transition={cardSpring}
-                style={{ rotateX, rotateY }}
+                style={{
+                    rotateX,
+                    rotateY,
+                    transformPerspective: 2000
+                }}
             >
-                {/* Background Blur & Reaction */}
+                {/* Animated Gradient Overlay */}
                 <motion.div
                     className="card-backdrop-blur"
                     animate={{
-                        opacity: isHovered ? 0.35 : 0,
-                        backdropFilter: isHovered ? 'blur(8px)' : 'blur(0px)'
+                        opacity: isHovered ? 0.5 : 0.3,
+                        scale: isHovered ? 1.1 : 1
                     }}
-                    transition={{ duration: 0.4 }}
+                    transition={{ duration: 0.6 }}
                 />
 
-                {/* 1. Top-Left Circular Index */}
-                <div className="card-index-overlay">
+                {/* Enhanced Index Circle with Sparkle */}
+                <motion.div
+                    className="card-index-overlay"
+                    animate={{
+                        scale: isHovered ? 1.05 : 1,
+                        rotate: isHovered ? 5 : 0
+                    }}
+                    transition={{ duration: 0.5 }}
+                >
                     <div className="index-circle">
-                        <span className="label">PROJECT</span>
+                        <motion.span
+                            className="label"
+                            animate={{
+                                letterSpacing: isHovered ? '0.25em' : '0.2em'
+                            }}
+                        >
+                            PROJECT
+                        </motion.span>
                         <span className="value">{project.index} | 0{total}</span>
+                        {isHovered && (
+                            <motion.div
+                                initial={{ scale: 0, rotate: 0 }}
+                                animate={{ scale: 1, rotate: 360 }}
+                                exit={{ scale: 0 }}
+                                transition={{ duration: 0.5 }}
+                                style={{
+                                    position: 'absolute',
+                                    top: -5,
+                                    right: -5
+                                }}
+                            >
+                                <Sparkles size={14} color={project.accent} />
+                            </motion.div>
+                        )}
                     </div>
-                </div>
+                </motion.div>
 
-                {/* 2. Top-Right Metadata */}
-                <div className="card-meta-overlay">
+                {/* Enhanced Metadata */}
+                <motion.div
+                    className="card-meta-overlay"
+                    animate={{
+                        y: isHovered ? -5 : 0,
+                        opacity: isHovered ? 1 : 0.9
+                    }}
+                    transition={{ duration: 0.4 }}
+                >
                     <div className="meta-stack">
-                        <span className="project-id">{project.id}</span>
+                        <motion.span
+                            className="project-id"
+                            animate={{
+                                color: isHovered ? project.accent : '#fff'
+                            }}
+                        >
+                            {project.id}
+                        </motion.span>
                         <div className="divider"></div>
                         <span className="project-tech">{project.tech}</span>
                     </div>
-                </div>
+                </motion.div>
 
-                {/* 3, 4, 5. Main Content Area */}
-                <div className="card-main-content">
-                    <motion.h2
-                        className="card-title-display"
+                {/* Enhanced Main Content with Staggered Animation */}
+                <motion.div
+                    className="card-main-content"
+                    style={{ x: titleX, y: titleY }}
+                >
+                    <motion.div
                         animate={{
-                            opacity: isHovered ? 1 : 0.8,
-                            y: isHovered ? 0 : 14
+                            opacity: isHovered ? 1 : 0.95,
+                            y: isHovered ? -5 : 0
                         }}
-                        transition={{ delay: 0.08, duration: 0.35 }}
+                        transition={{ delay: 0.05, duration: 0.4 }}
                     >
-                        {project.title}
-                    </motion.h2>
+                        <h2 className="card-title-display">
+                            {project.title}
+                        </h2>
+                        {project.subtitle && (
+                            <motion.p
+                                style={{
+                                    fontSize: '18px',
+                                    fontWeight: 300,
+                                    fontStyle: 'italic',
+                                    color: project.accent,
+                                    marginTop: '-15px',
+                                    marginBottom: '20px',
+                                    opacity: 0.8
+                                }}
+                                animate={{
+                                    opacity: isHovered ? 1 : 0.7,
+                                    x: isHovered ? 5 : 0
+                                }}
+                            >
+                                {project.subtitle}
+                            </motion.p>
+                        )}
+                    </motion.div>
 
                     <motion.p
                         className="card-description-text"
                         animate={{
-                            opacity: isHovered ? 1 : 0.6,
-                            y: isHovered ? 0 : 18
+                            opacity: isHovered ? 1 : 0.7,
+                            y: isHovered ? 0 : 10
                         }}
-                        transition={{ delay: 0.14, duration: 0.35 }}
+                        transition={{ delay: 0.1, duration: 0.4 }}
                     >
                         {project.description}
                     </motion.p>
@@ -171,32 +255,63 @@ const ProjectCard = ({ project, index, total }) => {
                         rel="noopener noreferrer"
                         className="card-visit-btn"
                         animate={{
-                            opacity: isHovered ? 1 : 0.6,
-                            y: isHovered ? 0 : 22
+                            opacity: isHovered ? 1 : 0.8,
+                            y: isHovered ? 0 : 15,
+                            scale: isHovered ? 1.05 : 1
                         }}
-                        transition={{ delay: 0.2, duration: 0.35 }}
+                        whileHover={{ scale: 1.08 }}
+                        whileTap={{ scale: 0.98 }}
+                        transition={{ delay: 0.15, duration: 0.4 }}
                     >
                         <span>VISIT SITE</span>
-                        <ArrowUpRight size={18} />
+                        <motion.div
+                            animate={{
+                                x: isHovered ? 3 : 0,
+                                y: isHovered ? -3 : 0
+                            }}
+                        >
+                            <ArrowUpRight size={18} />
+                        </motion.div>
                     </motion.a>
-                </div>
+                </motion.div>
 
-                {/* 7. Preview Window (Live Iframe Parallax) */}
+                {/* Enhanced Preview Window with Advanced Parallax */}
                 <motion.div
                     className="preview-window-container"
                     style={{ x: previewX, y: previewY }}
+                    animate={{
+                        scale: isHovered ? 1.05 : 1,
+                        rotateY: isHovered ? -2 : 0,
+                        rotateX: isHovered ? 2 : 0
+                    }}
+                    transition={cardSpring}
                 >
                     <motion.div
                         className="preview-window-frame"
                         animate={{
-                            scale: isHovered ? 1.12 : 1.05,
-                            y: isHovered ? 0 : 6
+                            y: isHovered ? -8 : 0
                         }}
                         transition={cardSpring}
                     >
                         <div className="window-header">
                             <div className="dots">
-                                <span /> <span /> <span />
+                                <motion.span
+                                    animate={{
+                                        scale: isHovered ? 1.2 : 1
+                                    }}
+                                />
+                                <motion.span
+                                    animate={{
+                                        scale: isHovered ? 1.2 : 1
+                                    }}
+                                    transition={{ delay: 0.05 }}
+                                />
+                                <motion.span
+                                    animate={{
+                                        scale: isHovered ? 1.2 : 1
+                                    }}
+                                    transition={{ delay: 0.1 }}
+                                />
                             </div>
                             <div className="address-bar">
                                 <Monitor size={10} />
@@ -206,52 +321,122 @@ const ProjectCard = ({ project, index, total }) => {
 
                         <div className="window-body">
                             {isHovered && window.innerWidth > 768 ? (
-                                <iframe
+                                <motion.iframe
                                     src={project.url}
                                     title={project.title}
                                     className="live-preview-frame"
                                     loading="lazy"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ duration: 0.5 }}
                                 />
                             ) : (
                                 <div className="static-preview-image">
-                                    <img src={project.image} alt={project.title} />
-                                    <div className="image-overlay">
+                                    <motion.img
+                                        src={project.image}
+                                        alt={project.title}
+                                        animate={{
+                                            scale: isHovered ? 1.08 : 1
+                                        }}
+                                        transition={{ duration: 0.8 }}
+                                    />
+                                    <motion.div
+                                        className="image-overlay"
+                                        animate={{
+                                            opacity: isHovered ? 1 : 0
+                                        }}
+                                    >
                                         <ExternalLink size={24} />
-                                    </div>
+                                    </motion.div>
                                 </div>
                             )}
                         </div>
                     </motion.div>
                 </motion.div>
 
-                {/* Background Bloom (Radial Glow) */}
-                <div className="card-radial-bloom"></div>
+                {/* Enhanced Radial Bloom with Dynamic Position */}
+                <motion.div
+                    className="card-radial-bloom"
+                    animate={{
+                        opacity: isHovered ? 1 : 0.6,
+                        scale: isHovered ? 1.2 : 1,
+                        x: cursorPosition.x * 0.5,
+                        y: cursorPosition.y * 0.5
+                    }}
+                    transition={{ duration: 0.8 }}
+                    style={{
+                        background: `radial-gradient(circle, ${project.accent}20 0%, ${project.accent}10 30%, transparent 70%)`
+                    }}
+                />
+
+                {/* Magnetic Cursor Follower */}
+                <AnimatePresence>
+                    {isHovered && (
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0 }}
+                            animate={{ opacity: 0.15, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0 }}
+                            style={{
+                                position: 'absolute',
+                                width: '200px',
+                                height: '200px',
+                                borderRadius: '50%',
+                                background: `radial-gradient(circle, ${project.accent} 0%, transparent 70%)`,
+                                pointerEvents: 'none',
+                                left: `calc(50% + ${cursorPosition.x}px)`,
+                                top: `calc(50% + ${cursorPosition.y}px)`,
+                                transform: 'translate(-50%, -50%)',
+                                filter: 'blur(60px)',
+                                zIndex: 2
+                            }}
+                            transition={{ duration: 0.3 }}
+                        />
+                    )}
+                </AnimatePresence>
             </motion.div>
         </motion.div>
     );
 };
 
 const Projects = () => {
+    const containerRef = useRef(null);
+    const { scrollXProgress } = useScroll({
+        container: containerRef
+    });
+
     return (
         <motion.section
             className="projects-horizontal-section"
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0 }}
             whileInView={{
                 opacity: 1,
-                y: 0,
                 transition: {
-                    type: "spring",
-                    stiffness: 90,
-                    damping: 18,
-                    delay: 0.1
+                    duration: 0.8,
+                    ease: "easeOut"
                 }
             }}
             viewport={{ once: true }}
         >
-            <div className="projects-scroll-container">
+            {/* Scroll Progress Indicator */}
+            <motion.div
+                style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: '3px',
+                    background: 'linear-gradient(90deg, #D4AF37, #FFD700)',
+                    transformOrigin: '0%',
+                    scaleX: scrollXProgress,
+                    zIndex: 100,
+                    opacity: 0.8
+                }}
+            />
+
+            <div className="projects-scroll-container" ref={containerRef}>
                 {projects.map((project, i) => (
                     <ProjectCard
-                        key={i}
+                        key={project.id}
                         project={project}
                         index={i}
                         total={projects.length}
