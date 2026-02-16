@@ -16,48 +16,70 @@
 }
 
 .hero-headline {
-    font-size: clamp(40px, 10vw, 80px);
-    /* Mobile: starts at 40px, scales to 80px */
-    line-height: 0.9;
-    /* Slightly more breathing room on mobile */
+    font-size: clamp(28px, 8vw, 60px);
+    /* Mobile: starts at 28px, much smaller for phones */
+    line-height: 1;
+    /* More breathing room on mobile */
     font-weight: 700;
-    letter-spacing: -0.05em;
-    /* Critical: Negative tracking for editorial look */
+    letter-spacing: -0.03em;
+    /* Less negative tracking on mobile */
     text-transform: uppercase;
     margin: 0;
     will-change: transform;
 }
 
+/* Small phones and up */
+@media (min-width: 480px) {
+    .hero-headline {
+        font-size: clamp(36px, 9vw, 80px);
+        line-height: 0.95;
+        letter-spacing: -0.04em;
+    }
+}
+
 /* Tablet and up */
 @media (min-width: 640px) {
     .hero-headline {
-        font-size: clamp(60px, 11vw, 120px);
-        line-height: 0.85;
+        font-size: clamp(50px, 10vw, 100px);
+        line-height: 0.9;
+        letter-spacing: -0.045em;
     }
 }
 
 /* Medium screens */
 @media (min-width: 768px) {
     .hero-headline {
-        font-size: clamp(80px, 12vw, 140px);
-        line-height: 0.82;
+        font-size: clamp(70px, 11vw, 130px);
+        line-height: 0.85;
+        letter-spacing: -0.05em;
     }
 }
 
 /* Large screens */
 @media (min-width: 1024px) {
     .hero-headline {
-        font-size: clamp(100px, 12vw, 160px);
-        line-height: 0.8;
+        font-size: clamp(90px, 11.5vw, 150px);
+        line-height: 0.82;
+        letter-spacing: -0.05em;
     }
 }
 
 /* Extra large screens */
 @media (min-width: 1280px) {
     .hero-headline {
-        font-size: clamp(120px, 12vw, 180px);
+        font-size: clamp(110px, 12vw, 170px);
         line-height: 0.8;
         /* Critical: Tight line-height matching Roshan Sahu */
+        letter-spacing: -0.05em;
+    }
+}
+
+/* 4K and ultra-wide */
+@media (min-width: 1920px) {
+    .hero-headline {
+        font-size: clamp(130px, 12vw, 180px);
+        line-height: 0.8;
+        letter-spacing: -0.05em;
     }
 }
 
