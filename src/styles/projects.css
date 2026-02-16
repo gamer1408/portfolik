@@ -4,16 +4,47 @@
 
 /* Film Grain Texture Overlay */
 @keyframes grain {
-    0%, 100% { transform: translate(0, 0); }
-    10% { transform: translate(-5%, -10%); }
-    20% { transform: translate(-15%, 5%); }
-    30% { transform: translate(7%, -25%); }
-    40% { transform: translate(-5%, 25%); }
-    50% { transform: translate(-15%, 10%); }
-    60% { transform: translate(15%, 0%); }
-    70% { transform: translate(0%, 15%); }
-    80% { transform: translate(3%, 35%); }
-    90% { transform: translate(-10%, 10%); }
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    10% {
+        transform: translate(-5%, -10%);
+    }
+
+    20% {
+        transform: translate(-15%, 5%);
+    }
+
+    30% {
+        transform: translate(7%, -25%);
+    }
+
+    40% {
+        transform: translate(-5%, 25%);
+    }
+
+    50% {
+        transform: translate(-15%, 10%);
+    }
+
+    60% {
+        transform: translate(15%, 0%);
+    }
+
+    70% {
+        transform: translate(0%, 15%);
+    }
+
+    80% {
+        transform: translate(3%, 35%);
+    }
+
+    90% {
+        transform: translate(-10%, 10%);
+    }
 }
 
 .projects-horizontal-section {
@@ -84,22 +115,21 @@
     justify-content: space-between;
     padding: 80px;
     border: 1px solid rgba(255, 255, 255, 0.08);
-    background: linear-gradient(135deg, 
-        rgba(17, 17, 17, 0.95) 0%, 
-        rgba(20, 20, 20, 0.9) 100%
-    );
+    background: linear-gradient(135deg,
+            rgba(17, 17, 17, 0.95) 0%,
+            rgba(20, 20, 20, 0.9) 100%);
     backdrop-filter: blur(20px);
     cursor: pointer;
     transform-style: preserve-3d;
     transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-    box-shadow: 
+    box-shadow:
         0 20px 60px rgba(0, 0, 0, 0.4),
         inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .project-card-inner:hover {
     border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 
+    box-shadow:
         0 30px 90px rgba(0, 0, 0, 0.6),
         0 0 80px rgba(212, 175, 55, 0.1),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -319,7 +349,7 @@
     border-radius: 24px;
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 
+    box-shadow:
         0 50px 120px rgba(0, 0, 0, 0.8),
         0 0 0 1px rgba(255, 255, 255, 0.05) inset;
     display: flex;
@@ -328,7 +358,7 @@
 }
 
 .project-card-inner:hover .preview-window-frame {
-    box-shadow: 
+    box-shadow:
         0 60px 140px rgba(0, 0, 0, 0.9),
         0 0 60px rgba(212, 175, 55, 0.15),
         0 0 0 1px rgba(255, 255, 255, 0.1) inset;
@@ -456,11 +486,10 @@
     right: -15%;
     width: 80%;
     height: 80%;
-    background: radial-gradient(circle, 
-        rgba(212, 175, 55, 0.08) 0%, 
-        rgba(212, 175, 55, 0.03) 30%,
-        transparent 70%
-    );
+    background: radial-gradient(circle,
+            rgba(212, 175, 55, 0.08) 0%,
+            rgba(212, 175, 55, 0.03) 30%,
+            transparent 70%);
     filter: blur(100px);
     pointer-events: none;
     z-index: 0;
@@ -474,9 +503,12 @@
 
 /* Animated Gradient Border */
 @keyframes borderGlow {
-    0%, 100% {
+
+    0%,
+    100% {
         opacity: 0.3;
     }
+
     50% {
         opacity: 0.8;
     }
@@ -488,12 +520,11 @@
     inset: -1px;
     border-radius: 40px;
     padding: 1px;
-    background: linear-gradient(135deg, 
-        rgba(212, 175, 55, 0.3), 
-        transparent 30%, 
-        transparent 70%, 
-        rgba(212, 175, 55, 0.3)
-    );
+    background: linear-gradient(135deg,
+            rgba(212, 175, 55, 0.3),
+            transparent 30%,
+            transparent 70%,
+            rgba(212, 175, 55, 0.3));
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
@@ -507,56 +538,405 @@
     animation: borderGlow 3s ease-in-out infinite;
 }
 
-/* Mobile Responsive */
+/* Mobile Responsive - Comprehensive */
+
+/* Tablet and below (iPad, smaller tablets) */
+@media (max-width: 1024px) {
+    .projects-scroll-container {
+        padding: 0 5vw;
+    }
+
+    .project-card-wrapper {
+        flex: 0 0 calc(100vw - 10vw);
+        padding: 30px 20px;
+    }
+
+    .project-card-inner {
+        padding: 60px 50px;
+        height: 75vh;
+    }
+
+    .preview-window-container {
+        width: 45%;
+    }
+
+    .card-title-display {
+        font-size: clamp(50px, 7vw, 80px);
+    }
+}
+
+/* Mobile Landscape and Small Tablets */
 @media (max-width: 768px) {
+
+    /* Disable film grain on mobile for performance */
+    .projects-horizontal-section::before {
+        display: none;
+    }
+
     .projects-scroll-container {
         padding: 0;
+        scroll-snap-type: x proximity;
     }
 
     .project-card-wrapper {
         flex: 0 0 100vw;
-        padding: 20px;
+        padding: 16px;
+        perspective: 1000px;
     }
 
     .project-card-inner {
         flex-direction: column;
-        padding: 40px 28px;
+        padding: 32px 24px;
         height: auto;
-        min-height: 85vh;
+        min-height: auto;
+        border-radius: 24px;
+        gap: 24px;
     }
 
+    /* Disable 3D transforms on mobile */
+    .project-card-inner:hover {
+        transform: none !important;
+    }
+
+    /* Index Circle - Mobile Optimized */
     .card-index-overlay {
         position: relative;
         top: 0;
         left: 0;
-        margin-bottom: 20px;
+        margin-bottom: 0;
+        align-self: flex-start;
     }
 
+    .index-circle {
+        width: 80px;
+        height: 80px;
+    }
+
+    .index-circle .label {
+        font-size: 7px;
+    }
+
+    .index-circle .value {
+        font-size: 10px;
+    }
+
+    /* Metadata - Mobile Optimized */
     .card-meta-overlay {
         position: relative;
         top: 0;
         right: 0;
-        margin-bottom: 30px;
+        margin-bottom: 24px;
+        width: 100%;
     }
 
     .card-meta-overlay .meta-stack {
         align-items: flex-start;
+        padding: 16px 20px;
+        width: 100%;
     }
 
+    .project-id {
+        font-size: 9px;
+    }
+
+    .project-tech {
+        font-size: 8px;
+    }
+
+    /* Main Content - Mobile Optimized */
+    .card-main-content {
+        max-width: 100%;
+        margin-top: 0;
+        order: 2;
+    }
+
+    .card-title-display {
+        font-size: clamp(32px, 9vw, 48px);
+        margin-bottom: 16px;
+        line-height: 1;
+    }
+
+    .card-description-text {
+        font-size: 13px;
+        line-height: 1.6;
+        margin-bottom: 24px;
+        max-width: 100%;
+    }
+
+    /* Button - Touch Friendly */
+    .card-visit-btn {
+        padding: 12px 24px;
+        font-size: 10px;
+        gap: 10px;
+        width: fit-content;
+    }
+
+    /* Preview Window - Mobile Optimized */
     .preview-window-container {
         position: relative;
         top: 0;
         right: 0;
-        transform: none;
+        transform: none !important;
         width: 100%;
-        margin-top: 40px;
+        margin-top: 0;
+        order: 1;
+        filter: none;
+    }
+
+    .preview-window-frame {
+        border-radius: 16px;
+        aspect-ratio: 16/9;
+    }
+
+    .window-header {
+        height: 28px;
+        padding: 0 12px;
+    }
+
+    .window-header .dots span {
+        width: 6px;
+        height: 6px;
+    }
+
+    .address-bar {
+        font-size: 8px;
+    }
+
+    /* Disable parallax on mobile */
+    .preview-window-container,
+    .card-main-content {
+        transform: none !important;
+    }
+
+    /* Simplify effects on mobile */
+    .card-radial-bloom {
+        display: none;
+    }
+
+    .project-card-inner::after {
+        display: none;
+    }
+
+    /* Adjust card layout order */
+    .project-card-inner {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+/* Small Mobile Phones (iPhone SE, small Android) */
+@media (max-width: 480px) {
+    .project-card-wrapper {
+        padding: 12px;
+    }
+
+    .project-card-inner {
+        padding: 24px 20px;
+        border-radius: 20px;
+        gap: 20px;
+        min-height: auto;
+    }
+
+    /* Smaller index circle */
+    .index-circle {
+        width: 70px;
+        height: 70px;
+    }
+
+    .index-circle .label {
+        font-size: 6px;
+        letter-spacing: 0.15em;
+    }
+
+    .index-circle .value {
+        font-size: 9px;
+    }
+
+    /* Compact metadata */
+    .card-meta-overlay .meta-stack {
+        padding: 12px 16px;
+        gap: 12px;
+    }
+
+    .project-id {
+        font-size: 8px;
+        letter-spacing: 0.2em;
+    }
+
+    .divider {
+        width: 30px;
+    }
+
+    .project-tech {
+        font-size: 7px;
+    }
+
+    /* Optimized typography */
+    .card-title-display {
+        font-size: clamp(28px, 8vw, 40px);
+        margin-bottom: 12px;
+    }
+
+    .card-description-text {
+        font-size: 12px;
+        line-height: 1.5;
+        margin-bottom: 20px;
+    }
+
+    /* Compact button */
+    .card-visit-btn {
+        padding: 10px 20px;
+        font-size: 9px;
+        gap: 8px;
+    }
+
+    .card-visit-btn svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    /* Smaller preview window */
+    .preview-window-frame {
+        border-radius: 12px;
+    }
+
+    .window-header {
+        height: 24px;
+        padding: 0 10px;
+        gap: 8px;
+    }
+
+    .window-header .dots {
+        gap: 5px;
+    }
+
+    .window-header .dots span {
+        width: 5px;
+        height: 5px;
+    }
+
+    .address-bar {
+        font-size: 7px;
+    }
+
+    .address-bar svg {
+        width: 8px;
+        height: 8px;
+    }
+}
+
+/* Extra Small Phones (very small screens) */
+@media (max-width: 375px) {
+    .project-card-inner {
+        padding: 20px 16px;
+        gap: 16px;
+    }
+
+    .index-circle {
+        width: 60px;
+        height: 60px;
+    }
+
+    .index-circle .label {
+        font-size: 5px;
+    }
+
+    .index-circle .value {
+        font-size: 8px;
     }
 
     .card-title-display {
-        font-size: clamp(36px, 10vw, 56px);
+        font-size: clamp(24px, 7vw, 36px);
+    }
+
+    .card-description-text {
+        font-size: 11px;
+    }
+
+    .card-visit-btn {
+        padding: 8px 16px;
+        font-size: 8px;
+    }
+}
+
+/* Landscape Mobile Optimization */
+@media (max-width: 768px) and (orientation: landscape) {
+    .project-card-inner {
+        flex-direction: row;
+        min-height: auto;
+        height: auto;
+        padding: 24px;
+    }
+
+    .preview-window-container {
+        width: 50%;
+        margin-top: 0;
+        margin-left: 20px;
     }
 
     .card-main-content {
-        max-width: 100%;
+        width: 50%;
+    }
+
+    .card-index-overlay,
+    .card-meta-overlay {
+        position: absolute;
+    }
+
+    .card-index-overlay {
+        top: 20px;
+        left: 20px;
+    }
+
+    .card-meta-overlay {
+        top: 20px;
+        right: 20px;
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+
+    /* Disable hover effects on touch devices */
+    .project-card-inner:hover {
+        transform: none !important;
+        scale: 1 !important;
+    }
+
+    .project-card-inner:hover .index-circle {
+        transform: none !important;
+    }
+
+    .project-card-inner:hover .meta-stack {
+        transform: none !important;
+    }
+
+    /* Make elements always visible on touch */
+    .card-title-display,
+    .card-description-text,
+    .card-visit-btn {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    /* Disable magnetic cursor effect */
+    .card-backdrop-blur {
+        display: none;
+    }
+
+    /* Ensure touch-friendly tap targets */
+    .card-visit-btn {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+    }
+}
+
+/* High DPI / Retina Displays */
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+    .project-card-inner {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 }

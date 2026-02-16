@@ -45,9 +45,22 @@ const projects = [
 const ProjectCard = ({ project, index, total }) => {
     const [isHovered, setIsHovered] = useState(false);
     const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+    const [isMobile, setIsMobile] = useState(false);
     const cardRef = useRef(null);
 
-    // Enhanced Parallax Motion Values
+    // Detect mobile devices
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth <= 768 || 'ontouchstart' in window);
+        };
+
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    // Enhanced Parallax Motion Values (disabled on mobile)
     const x = useMotionValue(0);
     const y = useMotionValue(0);
 
@@ -55,19 +68,19 @@ const ProjectCard = ({ project, index, total }) => {
     const mouseX = useSpring(x, springConfig);
     const mouseY = useSpring(y, springConfig);
 
-    // 3D Transform values
-    const rotateX = useTransform(mouseY, [-100, 100], [8, -8]);
-    const rotateY = useTransform(mouseX, [-100, 100], [-8, 8]);
+    // 3D Transform values (reduced on mobile)
+    const rotateX = useTransform(mouseY, [-100, 100], isMobile ? [0, 0] : [8, -8]);
+    const rotateY = useTransform(mouseX, [-100, 100], isMobile ? [0, 0] : [-8, 8]);
 
-    // Enhanced parallax for different elements
-    const previewX = useTransform(mouseX, [-100, 100], [-12, 12]);
-    const previewY = useTransform(mouseY, [-100, 100], [-10, 10]);
+    // Enhanced parallax for different elements (disabled on mobile)
+    const previewX = useTransform(mouseX, [-100, 100], isMobile ? [0, 0] : [-12, 12]);
+    const previewY = useTransform(mouseY, [-100, 100], isMobile ? [0, 0] : [-10, 10]);
 
-    const titleX = useTransform(mouseX, [-100, 100], [-5, 5]);
-    const titleY = useTransform(mouseY, [-100, 100], [-3, 3]);
+    const titleX = useTransform(mouseX, [-100, 100], isMobile ? [0, 0] : [-5, 5]);
+    const titleY = useTransform(mouseY, [-100, 100], isMobile ? [0, 0] : [-3, 3]);
 
     const handleMouseMove = (e) => {
-        if (!cardRef.current) return;
+        if (!cardRef.current || isMobile) return;
         const rect = cardRef.current.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
@@ -85,6 +98,7 @@ const ProjectCard = ({ project, index, total }) => {
     };
 
     const handleMouseLeave = () => {
+        if (isMobile) return;
         x.set(0);
         y.set(0);
         setIsHovered(false);
